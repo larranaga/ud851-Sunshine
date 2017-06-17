@@ -220,9 +220,22 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
             loadWeatherData();
             return true;
         }
-
-        // TODO (2) Launch the map when the map menu item is clicked
+        else if(id == R.id.action_show_map){
+            String location = "1600 Ampitheatre Parkway, CA";
+            openLocationInMap(location);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openLocationInMap(String location) {
+        Uri geoLocation = Uri.parse("geo:0,0?q=" + location);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+        if(intent.resolveActivity(getPackageManager()) != null)
+            startActivity(intent);
+        else
+            Log.d(TAG, "Couldn't call " + geoLocation.toString() + " , no receiving apps installed!");
     }
 }
